@@ -13,6 +13,53 @@
 
 <img src='https://zhuang2002.github.io/ColorFlow/fig/teaser.png'/>
 
+# Manga Dataset Preparation and ColorFlow Usage
+
+This README provides a guide on how to prepare a manga dataset and use the ColorFlow tool for processing.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Python 3.x
+- Git
+- FFmpeg
+
+## Step 1: Prepare the Manga Dataset
+
+1. **Obtain Manga Images:**
+   - Visit the Genshin Impact manga website to download or view manga images.
+   - Example links:
+     - [Genshin Impact Manga](https://genshin.hoyoverse.com/m/zh-tw/manga)
+     - [Specific Manga Detail](https://genshin.hoyoverse.com/zh-tw/manga/detail/104885?mute=1)
+
+2. **Prepare Reference Image:**
+   - Ensure you have at least one image with two characters for reference. This image will be used for colorization or other processing tasks.
+
+## Step 2: Install Required Software
+
+1. **Update and Install Dependencies:**
+   ```bash
+   sudo apt-get update && sudo apt-get install cbm ffmpeg
+   ```
+
+2. **Clone the ColorFlow Repository:**
+   ```bash
+   git clone https://huggingface.co/spaces/svjack/ColorFlow && cd ColorFlow
+   ```
+
+3. **Install Python Requirements:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## Step 3: Run the ColorFlow Application
+
+1. **Start the Application:**
+   ```bash
+   python app.py
+   ```
+
 ### 🌟 Abstract 
 
 Automatic black-and-white image sequence colorization while preserving character and object identity (ID) is a complex task with significant market demand, such as in cartoon or comic series colorization. Despite advancements in visual colorization using large-scale generative models like diffusion models, challenges with controllability and identity consistency persist, making current solutions unsuitable for industrial application.
