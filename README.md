@@ -59,6 +59,17 @@ Before you begin, ensure you have the following installed:
    ```bash
    python app.py
    ```
+- Take Genshin Impact Manga for ColorFlow for example
+- Input Image:
+![input_1](https://github.com/user-attachments/assets/93f8c687-119f-4625-b965-2a124c45f956)
+
+![image_2](https://github.com/user-attachments/assets/aec412b4-6f1f-4cdf-aa8e-83b1cdee961c)
+
+
+- Colored Image:
+![image_3](https://github.com/user-attachments/assets/da185d84-9b2a-4f78-a5d5-8d1d5190349a)
+
+![image_4](https://github.com/user-attachments/assets/0439d0ec-254a-4879-a4df-77f9767de32e)
 
 ### 🌟 Abstract 
 
