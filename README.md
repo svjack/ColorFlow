@@ -71,6 +71,63 @@ Before you begin, ensure you have the following installed:
 
 ![image_4](https://github.com/user-attachments/assets/0439d0ec-254a-4879-a4df-77f9767de32e)
 
+- API Method
+```python
+### 使用api 方法
+
+from gradio_client import Client, handle_file
+from PIL import Image
+import pandas as pd
+
+#client = Client("https://a9b5f5cb5cf97de36e.gradio.live/")
+client = Client("http://127.0.0.1:7860")
+result = client.predict(
+    query_image_=handle_file('nlu.png'),
+    input_style="Sketch",
+    resolution="640x640",
+    api_name="/extract_line_image"
+)
+print(result)
+
+final_result = client.predict(
+		reference_images=[handle_file("nlutree.jpg")],
+		resolution="640x640",
+		seed=0,
+		input_style="Sketch",
+		num_inference_steps=30,
+		api_name="/colorize_image"
+)
+print(final_result)
+Image.open(pd.DataFrame(final_result)["image"][0])
+
+Image.open(pd.DataFrame(final_result)["image"][2])
+
+result = client.predict(
+    query_image_=handle_file('nlu.png'),
+    input_style="GrayImage(ScreenStyle)",
+    resolution="640x640",
+    api_name="/extract_line_image"
+)
+print(result)
+
+final_result = client.predict(
+		reference_images=[handle_file("nlutree.jpg")],
+		resolution="640x640",
+		seed=0,
+		input_style="GrayImage(ScreenStyle)",
+		num_inference_steps=30,
+		api_name="/colorize_image"
+)
+print(final_result)
+Image.open(pd.DataFrame(final_result)["image"][0])
+
+Image.open(pd.DataFrame(final_result)["image"][2])
+
+#### sketch 会亮和鲜艳一些
+
+#### https://github.com/TencentARC/ColorFlow/issues/3
+```
+
 ### 🌟 Abstract 
 
 Automatic black-and-white image sequence colorization while preserving character and object identity (ID) is a complex task with significant market demand, such as in cartoon or comic series colorization. Despite advancements in visual colorization using large-scale generative models like diffusion models, challenges with controllability and identity consistency persist, making current solutions unsuitable for industrial application.
