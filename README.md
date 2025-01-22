@@ -33,6 +33,55 @@ Before you begin, ensure you have the following installed:
      - [Genshin Impact Manga](https://genshin.hoyoverse.com/m/zh-tw/manga)
      - [Specific Manga Detail](https://genshin.hoyoverse.com/zh-tw/manga/detail/104885?mute=1)
 
+```python
+### zh-tw
+# https://sg-public-api-static.hoyoverse.com/content_v2_user/app/a1b1f9d3315447cc/getContentList?iAppId=32&iChanId=401&iPageSize=1000&iPage=1&sLangKey=zh-tw
+
+### en-us
+# https://sg-public-api-static.hoyoverse.com/content_v2_user/app/a1b1f9d3315447cc/getContentList?iAppId=32&iChanId=401&iPageSize=1000&iPage=1&sLangKey=en-us
+
+import json
+import pandas as pd
+import numpy as np
+with open("genshin_impact_manga.json", "r", encoding="utf-8") as f:
+    j_obj = json.load(f)
+
+df = pd.DataFrame(j_obj["data"]["list"])
+dff = df[["sTitle", "sIntro", "sExt"]]
+dff["sExt"] = dff["sExt"].map(eval)
+dff["sExt_401_0"] = dff["sExt"].map(lambda x: x["401_0"])
+dff["sExt_401_1"] = dff["sExt"].map(lambda x: x["401_1"])
+dff = dff.iloc[::-1, :]
+
+dfff = dff.iloc[:, [0, 1, 3]].explode("sExt_401_0")
+dfff["name"] = dfff["sExt_401_0"].map(lambda x: x["name"])
+dfff["url"] = dfff["sExt_401_0"].map(lambda x: x["url"])
+dfff = dfff.iloc[:, [0, 1, 3, 4]].reset_index().iloc[:, 1:]
+dfff
+
+import requests
+from PIL import Image
+from io import BytesIO
+
+def url_to_image(url):
+    # 发送HTTP GET请求获取图像数据
+    response = requests.get(url)
+    response.raise_for_status()  # 如果请求失败，抛出异常
+
+    # 将获取到的图像数据转换为PIL图像对象
+    image = Image.open(BytesIO(response.content))
+    return image
+
+from datasets import Dataset
+ds = Dataset.from_pandas(dfff.reset_index().iloc[:, 1:])
+dss = ds.map(
+     lambda x: {"image": url_to_image(x["url"])}, num_proc = 4
+)
+
+dss.save_to_disk("im_local")
+dss.push_to_hub("svjack/Genshin-Impact-Manga")
+```
+
 2. **Prepare Reference Image:**
    - Ensure you have at least one image with two characters for reference. This image will be used for colorization or other processing tasks.
 
