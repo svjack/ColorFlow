@@ -80,6 +80,10 @@ dss = ds.map(
 
 dss.save_to_disk("im_local")
 dss.push_to_hub("svjack/Genshin-Impact-Manga")
+
+#https://huggingface.co/spaces/ragavsachdeva/Magiv2-Demo
+#https://huggingface.co/spaces/ragavsachdeva/the-manga-whisperer
+#https://github.com/ragavsachdeva/magi
 ```
 
 2. **Prepare Reference Image:**
