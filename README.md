@@ -40,6 +40,32 @@ Before you begin, ensure you have the following installed:
 ### en-us
 # https://sg-public-api-static.hoyoverse.com/content_v2_user/app/a1b1f9d3315447cc/getContentList?iAppId=32&iChanId=401&iPageSize=1000&iPage=1&sLangKey=en-us
 
+import requests
+import json
+
+# 目标 URL
+url = "https://sg-public-api-static.hoyoverse.com/content_v2_user/app/a1b1f9d3315447cc/getContentList?iAppId=32&iChanId=401&iPageSize=1000&iPage=1&sLangKey=en-us"
+
+# 发送 GET 请求
+response = requests.get(url)
+
+# 检查请求是否成功
+if response.status_code == 200:
+    # 解析 JSON 数据
+    data = response.json()
+
+    # 指定保存的文件路径
+    file_path = "genshin_impact_manga.json"
+
+    # 将数据写入到 .json 文件
+    with open(file_path, 'w', encoding='utf-8') as json_file:
+        json.dump(data, json_file, ensure_ascii=False, indent=4)
+
+    print(f"数据已成功保存到 {file_path}")
+else:
+    print(f"请求失败，状态码: {response.status_code}")
+    
+
 import json
 import pandas as pd
 import numpy as np
@@ -79,7 +105,8 @@ dss = ds.map(
 )
 
 dss.save_to_disk("im_local")
-dss.push_to_hub("svjack/Genshin-Impact-Manga")
+#dss.push_to_hub("svjack/Genshin-Impact-Manga")
+dss.push_to_hub("svjack/Genshin-Impact-Manga-EN-US")
 
 #https://huggingface.co/spaces/ragavsachdeva/Magiv2-Demo
 #https://huggingface.co/spaces/ragavsachdeva/the-manga-whisperer
